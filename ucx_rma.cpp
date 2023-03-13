@@ -362,7 +362,7 @@ void SERVER_RDMA::ScanNewMsg() {
 			}
 		}
 	}
-
+    printf("ScanNewMsg\n");
 	gettimeofday(&tm, NULL);
 	T_Queued = tm.tv_sec * 1000000 + tm.tv_usec;
     CHECKPARAM* pParam = (CHECKPARAM*)malloc(sizeof(CHECKPARAM));
