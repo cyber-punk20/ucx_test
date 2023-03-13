@@ -63,11 +63,11 @@ inline int generate_test_string(char *str, int size)
 {
     int i;
     int start = *((int*)str);
-    printf("haha");
+    // printf("haha");
     for (i = 4; i < (size - 1); ++i) {
-        str[i] = 'A' + ((start + i) % 26);
+        *(str + i) = 'A' + ((start + i) % 26);
     }
-    str[i] = '\0';
+    // str[i] = '\0';
     return 0;
 }
 
