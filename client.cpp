@@ -77,6 +77,7 @@ static void* Func_thread_send(void *pParam) {
         pClientUCX->UCX_Put(buffer, (void*)(pClientUCX->remote_addr_IO_CMD), pClientUCX->pal_remote_mem.rkey, BLOCK_SIZE);
         pClientUCX->UCX_Put(b, (void*)(pClientUCX->remote_addr_new_msg), pClientUCX->pal_remote_mem.rkey, 1);
     }
+    return NULL;
 }
 
 int main() {

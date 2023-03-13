@@ -607,7 +607,7 @@ void SERVER_RDMA::AllocateUCPDataWorker(int idx) {
 		exit(1);
     } 
     else {
-        fprintf(stdout, "mpi_rank %d idx %d: AllocateUCPDataWorker Success: %s %d\n", mpi_rank, idx, pUCX->address_p, pUCX->address_length);
+        fprintf(stdout, "mpi_rank %d idx %d idx_io_worker %d: AllocateUCPDataWorker Success: %s %d\n", mpi_rank, idx, idx_io_worker, pUCX->address_p, pUCX->address_length);
     }
 }
 
@@ -675,6 +675,9 @@ void SERVER_RDMA::Init_Server_Memory(int max_num_qp, int port) {
 
     max_qp = max_num_qp;
 	
+    p_Hash_socket_fd = (CHASHTABLE_INT *)malloc(CHASHTABLE_INT::GetStorageSize(max_num_qp*2));
+	p_Hash_socket_fd->DictCreate(max_num_qp*2, &elt_list_socket_fd, &ht_table_socket_fd);
+
     pUCX_Data = (UCX_DATA *)malloc(sizeof(UCX_DATA) * max_num_qp);
     assert(pUCX_Data != NULL);
     for(i=0; i<max_qp; i++)	{
