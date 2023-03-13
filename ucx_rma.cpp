@@ -362,7 +362,7 @@ void SERVER_RDMA::ScanNewMsg() {
 			}
 		}
 	}
-    printf("ScanNewMsg\n");
+    
 	gettimeofday(&tm, NULL);
 	T_Queued = tm.tv_sec * 1000000 + tm.tv_usec;
     CHECKPARAM* pParam = (CHECKPARAM*)malloc(sizeof(CHECKPARAM));
@@ -378,6 +378,7 @@ void SERVER_RDMA::ScanNewMsg() {
 	if(nPreAllUCXNewMsg != nAllUCXNewMsg) {
         fprintf(stdout, "nAllUCXNewMsg %d newMsgThisRound %d\n", nAllUCXNewMsg, nUCXNewMsg);
     }
+    printf("ScanNewMsg\n");
 	// pthread_mutex_unlock(&process_lock);
 
     // pthread_t pthread_check_data;
