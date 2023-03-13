@@ -43,6 +43,7 @@ SERVER_RDMA::~SERVER_RDMA(void)
 {
 	pthread_mutex_destroy(&process_lock);
     free(rkey_buffer);
+    ucp_mem_unmap(ucp_main_context, mr_shm_global);
     ucp_worker_destroy(ucp_main_worker);
     ucp_cleanup(ucp_main_context);
 }
