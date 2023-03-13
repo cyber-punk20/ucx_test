@@ -53,7 +53,7 @@ inline int Align64_Int(int a)
 inline bool check_test_string(char * str, int size) {
     int i;
     int start = *((int*)str);
-    for (i = 4; i < (size - 4); ++i) {
+    for (i = 4; i < (size - 1); ++i) {
         if(str[i] != (char)('A' + ((start + i) % 26))) return false;
     }
     return true;
@@ -64,8 +64,8 @@ inline int generate_test_string(char *str, int size)
     int i;
     int start = *((int*)str);
     printf("generate_test_string %d %d", start , size);
-    for (i = 4; i < (size - 4); ++i) {
-        printf("haha%d\n", i);
+    for (i = 4; i < (size - 1); ++i) {
+        // printf("haha%d\n", i);
         *(str + i) = (char)('A' + ((start + i) % 26));
     }
     // str[i] = '\0';
