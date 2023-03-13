@@ -380,11 +380,12 @@ void SERVER_RDMA::ScanNewMsg() {
     }
 	pthread_mutex_unlock(&process_lock);
 
-    pthread_t pthread_check_data;
-    if(pthread_create(&pthread_check_data, NULL, Func_thread_Check_Data, (void*)pParam)) {
-        fprintf(stderr, "Error creating thread Func_thread_Check_Data().\n");
-        return;
-    }
+    // pthread_t pthread_check_data;
+    // if(pthread_create(&pthread_check_data, NULL, Func_thread_Check_Data, (void*)pParam)) {
+    //     fprintf(stderr, "Error creating thread Func_thread_Check_Data().\n");
+    //     return;
+    // }
+    Func_thread_Check_Data((void*)pParam);
 
 }
 
