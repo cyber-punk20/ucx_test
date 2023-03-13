@@ -1,8 +1,30 @@
+#include <cassert>
+#include <cerrno>
+#include <cstdio>
+
+#include <unistd.h>
+#include <sys/time.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <execinfo.h>
+
+#include <arpa/inet.h>
+#include <netinet/in.h> 
+#include <net/if.h>
+#include <sys/ioctl.h>
+
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <signal.h>
+#include <mpi.h>
 #include "ucx_client.h"
+
 
 int mpi_rank, nClient=0;	// rank and size of MPI
 
-
+FSSERVERLIST UCXFileServerListLocal;
 void Read_UCX_FS_Param(void) {
 	char szFileName[128], *szServerConf=NULL;
 	FILE *fIn;
