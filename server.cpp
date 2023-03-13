@@ -155,32 +155,32 @@ int main(int argc, char **argv) {
 		}
 		fclose(fOut);
 	}
-    // pthread_t thread_ucx_polling_newmsg, thread_ucx_server;
-    // if(pthread_create(&(thread_ucx_server), NULL, Func_thread_ucx_server, &Server_ucx)) {
-	// 	fprintf(stderr, "Error creating thread\n");
-	// 	return 1;
-	// }
-    // while(1)	{
-	// 	if(Ucx_Server_Started)	break;
-	// }
-	// MPI_Barrier(MPI_COMM_WORLD);
+    pthread_t thread_ucx_polling_newmsg, thread_ucx_server;
+    if(pthread_create(&(thread_ucx_server), NULL, Func_thread_ucx_server, &Server_ucx)) {
+		fprintf(stderr, "Error creating thread\n");
+		return 1;
+	}
+    while(1)	{
+		if(Ucx_Server_Started)	break;
+	}
+	MPI_Barrier(MPI_COMM_WORLD);
 
     
-    // if(pthread_create(&(thread_ucx_polling_newmsg), NULL, Func_thread_UCX_Polling_New_Msg, &Server_ucx)) {
-	// 	fprintf(stderr, "Error creating thread thread_ucx_polling_newmsg\n");
-	// 	return 1;
-	// }
-	// printf("DBG> Rank = %d,  started Func_thread_UCX_Polling_New_Msg().\n", mpi_rank);
+    if(pthread_create(&(thread_ucx_polling_newmsg), NULL, Func_thread_UCX_Polling_New_Msg, &Server_ucx)) {
+		fprintf(stderr, "Error creating thread thread_ucx_polling_newmsg\n");
+		return 1;
+	}
+	printf("DBG> Rank = %d,  started Func_thread_UCX_Polling_New_Msg().\n", mpi_rank);
 
-	// // signal(SIGALRM, sigalarm_handler); // Register signal handler
-    // if(pthread_join(thread_ucx_polling_newmsg, NULL)) {
-	// 	fprintf(stderr, "Error joining thread.\n");
-	// 	return 2;
-	// }
-    // if(pthread_join(thread_ucx_server, NULL)) {
-	// 	fprintf(stderr, "Error joining thread thread_ucx_server.\n");
-	// 	return 2;
-	// }
+	// signal(SIGALRM, sigalarm_handler); // Register signal handler
+    if(pthread_join(thread_ucx_polling_newmsg, NULL)) {
+		fprintf(stderr, "Error joining thread.\n");
+		return 2;
+	}
+    if(pthread_join(thread_ucx_server, NULL)) {
+		fprintf(stderr, "Error joining thread thread_ucx_server.\n");
+		return 2;
+	}
 
 
     MPI_Finalize();
