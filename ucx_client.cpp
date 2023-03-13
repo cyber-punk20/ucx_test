@@ -3,6 +3,9 @@
 extern int mpi_rank, nClient;
 static pthread_mutex_t ucx_process_lock;
 FSSERVERLIST UCXFileServerListLocal;
+
+ucp_context_h CLIENT_UCX::ucp_main_context=NULL;
+int CLIENT_UCX::Done_UCX_Init = 0;
 void CLIENT_UCX::UCX_Pack_Rkey(ucp_mem_h memh, void *rkey_buffer) {
 	void* tmp_rkey_buffer;
 	size_t rkey_buffer_size;
