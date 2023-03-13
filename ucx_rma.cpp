@@ -278,19 +278,19 @@ int SERVER_RDMA::Accept_Client()
 }
 
 void SERVER_RDMA::Func_thread_Check_Data(void *pParam) {
-    // CHECKPARAM* pCheckParam;
-    // pCheckParam = (CHECKPARAM*)pParam;
-    // for(int i = 0; i < pCheckParam->size; i++) {
-    //     int idx_ucx = pCheckParam->idxList[i];
-    //     bool res = check_test_string((char*)pCheckParam->p_shm_IO_Cmd_Msg + BLOCK_SIZE * idx_ucx, BLOCK_SIZE);
-    //     if(res) {
-    //         fprintf(stdout, "idx_ucx: %d pass test", idx_ucx);
-    //     } else {
-    //         fprintf(stdout, "idx_ucx: %d fail test", idx_ucx);
-    //     }
-    // }
-    // free(pCheckParam->idxList);
-    // free(pCheckParam);
+    CHECKPARAM* pCheckParam;
+    pCheckParam = (CHECKPARAM*)pParam;
+    for(int i = 0; i < pCheckParam->size; i++) {
+        int idx_ucx = pCheckParam->idxList[i];
+        bool res = check_test_string((char*)pCheckParam->p_shm_IO_Cmd_Msg + BLOCK_SIZE * idx_ucx, BLOCK_SIZE);
+        if(res) {
+            fprintf(stdout, "idx_ucx: %d pass test", idx_ucx);
+        } else {
+            fprintf(stdout, "idx_ucx: %d fail test", idx_ucx);
+        }
+    }
+    free(pCheckParam->idxList);
+    free(pCheckParam);
 }
 
 void SERVER_RDMA::ScanNewMsg() {
@@ -378,7 +378,7 @@ void SERVER_RDMA::ScanNewMsg() {
 	if(nPreAllUCXNewMsg != nAllUCXNewMsg) {
         fprintf(stdout, "nAllUCXNewMsg %d newMsgThisRound %d\n", nAllUCXNewMsg, nUCXNewMsg);
     }
-    printf("ScanNewMsg\n");
+    // printf("ScanNewMsg\n");
 	// pthread_mutex_unlock(&process_lock);
 
     // pthread_t pthread_check_data;
