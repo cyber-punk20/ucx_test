@@ -30,23 +30,23 @@ client: $(OBJS)
 #	$(CXX) $(CXXFLAGS) -o $@ put_get_client.o dict.o xxhash.o -libverbs -lpthread -lrt
 
 # disable optimization. Possible threading bugs.
-obj/server.o: src/server.cpp $(HEADERS)
+obj/server.o: server.cpp $(HEADERS)
 	$(CXX) -O0 $(CXXFLAGS) -c -o obj/server.o $<
 
 
-obj/dict.o: src/dict.cpp $(HEADERS)
+obj/dict.o: dict.cpp $(HEADERS)
 	$(CXX) $(OPT) $(CXXFLAGS) -c -o obj/dict.o $<
 
-obj/xxhash.o: src/xxhash.cpp $(HEADERS)
+obj/xxhash.o: xxhash.cpp $(HEADERS)
 	$(CXX) $(OPT) $(CXXFLAGS) -c -o obj/xxhash.o $<
 
-obj/ucx_rma.o: src/ucx_rma.cpp $(HEADERS)
+obj/ucx_rma.o: ucx_rma.cpp $(HEADERS)
 	$(CXX) $(OPT) $(CXXFLAGS) -c -o obj/ucx_rma.o  $<
 
-obj/ucx_client.o: src/ucx_client.cpp $(HEADERS)
+obj/ucx_client.o: ucx_client.cpp $(HEADERS)
 	$(CXX) $(OPT) $(CXXFLAGS) -c -o obj/ucx_client.o  $<
 
-obj/client.o: src/client.cpp $(HEADERS)
+obj/client.o: client.cpp $(HEADERS)
 	$(CXX) $(OPT) $(CXXFLAGS) -c -o obj/client.o  $<
 
 #put_get_client.o: client/put_get_client.cpp $(HEADERS)
