@@ -180,10 +180,10 @@ int main(int argc, char **argv) {
 	// 	fprintf(stderr, "Error joining thread.\n");
 	// 	return 2;
 	// }
-    // if(pthread_join(thread_ucx_server, NULL)) {
-	// 	fprintf(stderr, "Error joining thread thread_ucx_server.\n");
-	// 	return 2;
-	// }
+    if(pthread_join(thread_ucx_server, NULL)) {
+		fprintf(stderr, "Error joining thread thread_ucx_server.\n");
+		return 2;
+	}
 
 
     MPI_Finalize();
