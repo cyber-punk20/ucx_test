@@ -142,7 +142,7 @@ int main(int argc, char **argv) {
 
     Get_Local_Server_Info();
 	MPI_Allgather(&ThisNode, sizeof(FS_SEVER_INFO), MPI_CHAR, AllFSNodes, sizeof(FS_SEVER_INFO), MPI_CHAR, MPI_COMM_WORLD);
-    FILE *fout;
+    FILE *fOut;
 	if(mpi_rank == 0)	{
 		printf("INFO> There are %d servers.\n", nFSServer);
 		fOut = fopen(UCX_FS_PARAM_FILE, "w");
