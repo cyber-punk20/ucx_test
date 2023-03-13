@@ -115,6 +115,9 @@ static void* Func_thread_UCX_Polling_New_Msg(void *pParam)
 }
 
 int main(int argc, char **argv) {
+	MPI_Init(NULL, NULL);
+	MPI_Comm_size(MPI_COMM_WORLD, &nFSServer);
+	MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
     struct sigaction act, old_action;
 	
     // Set up sigsegv handler
@@ -136,9 +139,7 @@ int main(int argc, char **argv) {
             org_int = old_action.sa_sigaction;
     }
 
-    MPI_Init(NULL, NULL);
-	MPI_Comm_size(MPI_COMM_WORLD, &nFSServer);
-	MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
+    
 
     Get_Local_Server_Info();
 	MPI_Allgather(&ThisNode, sizeof(FS_SEVER_INFO), MPI_CHAR, AllFSNodes, sizeof(FS_SEVER_INFO), MPI_CHAR, MPI_COMM_WORLD);
