@@ -174,7 +174,7 @@ int main(int argc, char **argv) {
 	// 	return 1;
 	// }
 	
-
+	Func_thread_UCX_Polling_New_Msg(&Server_ucx);
 	// // signal(SIGALRM, sigalarm_handler); // Register signal handler
     // if(pthread_join(thread_ucx_polling_newmsg, NULL)) {
 	// 	fprintf(stderr, "Error joining thread.\n");
