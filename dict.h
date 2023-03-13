@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "common_info.h"
 
 #define PTHREAD_MUTEXATTR_FLAG_PSHARED (0x80000000)	// int 
 #define INITIAL_SIZE (1024*1024*2)
