@@ -12,6 +12,9 @@
 #define IB_DEVICE	"ib0"
 #define DEFAULT_REM_BUFF_SIZE	(4096)
 
+#define UCX_PUT_TIMEOUT_MS	(3000)	// two seconds timeout
+#define UCX_WAIT_RESULT_TIMEOUT_MS	(3500)	// one second timeout
+
 #define NUM_THREAD_IO_WORKER_INTER_SERVER  (8)
 #define NUM_THREAD_IO_WORKER  (16+NUM_THREAD_IO_WORKER_INTER_SERVER)
 
