@@ -1,6 +1,6 @@
 #include "ucx_client.h"
 
-
+extern int mpi_rank, nClient;
 static pthread_mutex_t ucx_process_lock;
 FSSERVERLIST UCXFileServerListLocal;
 void CLIENT_UCX::UCX_Pack_Rkey(ucp_mem_h memh, void *rkey_buffer) {
