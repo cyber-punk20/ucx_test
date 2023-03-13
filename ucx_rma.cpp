@@ -303,10 +303,10 @@ void SERVER_RDMA::ScanNewMsg() {
 	if(p_shm_NewMsgFlag == NULL)	return;
 	LastQPLocal = IdxLastQP + 1;
 
-	pthread_mutex_lock(&process_lock);
+	// pthread_mutex_lock(&process_lock);
 	nPreAllUCXNewMsg = nAllUCXNewMsg;
 	nAllUCXNewMsg += nUCXNewMsg;
-	pthread_mutex_unlock(&process_lock);
+	// pthread_mutex_unlock(&process_lock);
 	nUCXNewMsg = 0;
 
 	if(IdxLastQP64 <=192)	{	// simple version
@@ -373,12 +373,12 @@ void SERVER_RDMA::ScanNewMsg() {
 		idx_ucx = UCXNewMsgList[i];
 		pParam->idxList[i] = idx_ucx;
 	}
-	pthread_mutex_lock(&process_lock);
+	// pthread_mutex_lock(&process_lock);
 	nAllUCXNewMsg += nUCXNewMsg;
 	if(nPreAllUCXNewMsg != nAllUCXNewMsg) {
         fprintf(stdout, "nAllUCXNewMsg %d newMsgThisRound %d\n", nAllUCXNewMsg, nUCXNewMsg);
     }
-	pthread_mutex_unlock(&process_lock);
+	// pthread_mutex_unlock(&process_lock);
 
     // pthread_t pthread_check_data;
     // if(pthread_create(&pthread_check_data, NULL, Func_thread_Check_Data, (void*)pParam)) {

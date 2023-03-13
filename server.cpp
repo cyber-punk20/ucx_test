@@ -111,6 +111,7 @@ static void* Func_thread_UCX_Polling_New_Msg(void *pParam)
 	}
 	return NULL;
 }
+pthread_attr_t thread_attr;
 
 int main(int argc, char **argv) {
 	
