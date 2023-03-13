@@ -118,23 +118,23 @@ int main(int argc, char **argv) {
     struct sigaction act, old_action;
 	
     // Set up sigsegv handler
-    // memset (&act, 0, sizeof(act));
-    // act.sa_flags = SA_SIGINFO;
+    memset (&act, 0, sizeof(act));
+    act.sa_flags = SA_SIGINFO;
 	
-    // act.sa_sigaction = sigsegv_handler;
-    // if (sigaction(SIGSEGV, &act, &old_action) == -1) {
-    //     perror("Error: sigaction");
-    //     exit(1);
-    // }
+    act.sa_sigaction = sigsegv_handler;
+    if (sigaction(SIGSEGV, &act, &old_action) == -1) {
+        perror("Error: sigaction");
+        exit(1);
+    }
 
-    // act.sa_sigaction = sigint_handler;
-    // if (sigaction(SIGINT, &act, &old_action) == -1) {
-    //     perror("Error: sigaction");
-    //    exit(1);
-    // }
-    // if( (old_action.sa_handler != SIG_DFL) && (old_action.sa_handler != SIG_IGN) )  {
-    //         org_int = old_action.sa_sigaction;
-    // }
+    act.sa_sigaction = sigint_handler;
+    if (sigaction(SIGINT, &act, &old_action) == -1) {
+        perror("Error: sigaction");
+       exit(1);
+    }
+    if( (old_action.sa_handler != SIG_DFL) && (old_action.sa_handler != SIG_IGN) )  {
+            org_int = old_action.sa_sigaction;
+    }
 
     MPI_Init(NULL, NULL);
 	MPI_Comm_size(MPI_COMM_WORLD, &nFSServer);
