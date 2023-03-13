@@ -386,7 +386,7 @@ void SERVER_RDMA::ScanNewMsg() {
     //     fprintf(stderr, "Error creating thread Func_thread_Check_Data().\n");
     //     return;
     // }
-    Func_thread_Check_Data((void*)pParam);
+    // Func_thread_Check_Data((void*)pParam);
 
 }
 
