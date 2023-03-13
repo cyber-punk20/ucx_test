@@ -23,9 +23,6 @@
 #include "common_info.h"
 #include "ucx_rma.h"
 
-#define PORT 8888
-#define UCX_PORT 12599
-
 int mpi_rank, nFSServer=0;	// rank and size of MPI
 int nNUMAPerNode=1;	// number of numa nodes per compute node
 int Ucx_Server_Started = 0;
