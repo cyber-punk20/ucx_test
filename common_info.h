@@ -2,6 +2,8 @@
 #ifndef __COMMON_INFO_H
 #define __COMMON_INFO_H
 
+#define PORT 8888
+#define UCX_PORT 12589
 
 #define BLOCK_SIZE (1024 * 1024 * 5)
 #define UCX_FS_PARAM_FILE "ucx_myfs.param"

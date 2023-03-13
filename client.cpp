@@ -24,7 +24,7 @@
 
 int mpi_rank, nClient=0;	// rank and size of MPI
 
-FSSERVERLIST UCXFileServerListLocal;
+extern FSSERVERLIST UCXFileServerListLocal;
 void Read_UCX_FS_Param(void) {
 	char szFileName[128], *szServerConf=NULL;
 	FILE *fIn;

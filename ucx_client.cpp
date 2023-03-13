@@ -1,8 +1,8 @@
 #include "ucx_client.h"
 
 
+static pthread_mutex_t ucx_process_lock;
 FSSERVERLIST UCXFileServerListLocal;
-
 void CLIENT_UCX::UCX_Pack_Rkey(ucp_mem_h memh, void *rkey_buffer) {
 	void* tmp_rkey_buffer;
 	size_t rkey_buffer_size;
@@ -183,11 +183,11 @@ void CLIENT_UCX::Setup_UCP_Connection(int IdxServer) {
 	memcpy(data_to_send.ucx.peer_address, ucx_my_data.peer_address, ucx_my_data.peer_address_length);
 	data_to_send.ucx.peer_address_length = ucx_my_data.peer_address_length;
 
-	RegisterBuf_RW_Local_Remote((void*)this, sizeof(CLIENT_UCX), &mr_loc_ucx_Obj);
+	// RegisterBuf_RW_Local_Remote((void*)this, sizeof(CLIENT_UCX), &mr_loc_ucx_Obj);
 	
 
     if(ucx_rem_buff == NULL)	{
-		ucx_rem_buff = (unsigned char *)memalign(64, 2*(IO_RESULT_BUFFER_SIZE + 4096));
+		ucx_rem_buff = (unsigned char *)memalign(64, 2*BLOCK_SIZE);
 		assert(ucx_rem_buff != NULL);
 		RegisterBuf_RW_Local_Remote(ucx_rem_buff, BLOCK_SIZE, &ucx_mr_rem);
 	}
@@ -337,9 +337,9 @@ void CLIENT_UCX::CloseUCPDataWorker() {
 	unsigned long long t;
 
 	IdxServer = Idx_fs;
-	pthread_mutex_lock(&(pUCXFileServerList->FS_List[IdxServer].fs_qp_lock));
-	pUCXFileServerList->FS_List[IdxServer].nQP --;
-	pthread_mutex_unlock(&(pUCXFileServerList->FS_List[IdxServer].fs_qp_lock));
+	pthread_mutex_lock(&(UCXFileServerListLocal.FS_List[IdxServer].fs_qp_lock));
+	UCXFileServerListLocal.FS_List[IdxServer].nQP --;
+	pthread_mutex_unlock(&(UCXFileServerListLocal.FS_List[IdxServer].fs_qp_lock));
 	ucp_rkey_destroy(pal_remote_mem.rkey);
 	if(ucp_worker != NULL) {
 		ucp_worker_destroy(ucp_worker);
