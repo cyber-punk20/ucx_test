@@ -277,7 +277,7 @@ int SERVER_RDMA::Accept_Client()
 	return fd;
 }
 
-void* SERVER_RDMA::Func_thread_Check_Data(void *pParam) {
+void SERVER_RDMA::Func_thread_Check_Data(void *pParam) {
     // CHECKPARAM* pCheckParam;
     // pCheckParam = (CHECKPARAM*)pParam;
     // for(int i = 0; i < pCheckParam->size; i++) {
