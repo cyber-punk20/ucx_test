@@ -107,12 +107,19 @@ pthread_mutex_t process_lock;	// for this process
                                      ucp_address_t* peer_address,
                                      ucp_ep_h *server_ep);
     ucs_status_t RegisterBuf_RW_Local_Remote(void* buf, size_t len, ucp_mem_h* memh);
+
+    void UCX_Pack_Rkey(ucp_mem_h memh, void *rkey_buffer);
+    void UCX_Unpack_Rkey(int idx, void* rkey_buffer, ucp_rkey_h* rkey_p);
     void UCX_Put(int idx, void* loc_buff, void* rem_buf, ucp_rkey_h rkey, size_t len);
     void UCX_Get(int idx, void* loc_buff, void* rem_buf, ucp_rkey_h rkey, size_t len);
 
     int FindFirstAvailableQP(void);
     void ScanNewMsg();
 private:
+
+    int nAllUCXNewMsg;
+    int nPreAllUCXNewMsg;
+
     int Init_Context(ucp_context_h *ucp_context, ucp_worker_h *ucp_worker);
     int Init_Worker(ucp_context_h ucp_context, ucp_worker_h *ucp_worker);
     int Get_IO_Worker_Index_from_UCX_Index(int idx_ucx);

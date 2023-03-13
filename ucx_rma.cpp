@@ -8,6 +8,9 @@
 
 int nUCXNewMsg, UCXNewMsgList[MAX_UCX_NEW_MSG];
 extern int mpi_rank, nFSServer;	// rank and size of MPI
+
+long int nSizeUCXReg;
+
 void err_cb(void *arg, ucp_ep_h ep, ucs_status_t status)
 {
     printf("mpi_rank %d: error handling callback was invoked with status %d (%s)\n",
@@ -744,8 +747,8 @@ void SERVER_RDMA::UCX_Pack_Rkey(ucp_mem_h memh, void *rkey_buffer) {
 void SERVER_RDMA::UCX_Unpack_Rkey(int idx, void* rkey_buffer, ucp_rkey_h* rkey_p) {
 	ucs_status_t status = ucp_ep_rkey_unpack(pUCX_Data[idx].peer_ep, rkey_buffer, rkey_p);
 	if(status != UCS_OK) {
-		fprintf(stderr, "Error occured at %s:L%d. Failure: ucp_ep_rkey_unpack in UCX_Unpack_Rkey(). tid= %d nConnectionAccu = %d Server() Client(%s)\n", 
-			__FILE__, __LINE__, pUCX_Data[idx].ctid,  nConnectionAccu, pUCX_Data[idx].szClientHostName, pUCX_Data[idx].szClientExeName);
+		fprintf(stderr, "Error occured at %s:L%d. Failure: ucp_ep_rkey_unpack in UCX_Unpack_Rkey().n", 
+			__FILE__, __LINE__);
 		exit(1);
 	}
 }
@@ -773,8 +776,8 @@ retry:
 				mpi_rank, idx, len);
             return;
         }
-        fprintf(stderr, "Error occured at %s:L%d. Failure: ucp_put_nbx in Put(). tid= %d nConnectionAccu = %d Server() Client(%s)\n", 
-			__FILE__, __LINE__, pUCX_Data[idx].ctid, nConnectionAccu, pUCX_Data[idx].szClientHostName, pUCX_Data[idx].szClientExeName);
+        fprintf(stderr, "Error occured at %s:L%d. Failure: ucp_put_nbx in Put().\n", 
+			__FILE__, __LINE__);
 		exit(1);
     }
     pUCX_Data[idx].nPut_Get++;
