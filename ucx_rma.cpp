@@ -26,6 +26,7 @@ typedef	struct	{
 typedef struct {
     int* idxList;
     int size;
+    unsigned char *p_shm_IO_Cmd_Msg;
 }CHECKPARAM, * PCHECKPARAM;
 
 SERVER_RDMA::SERVER_RDMA(void)
@@ -365,6 +366,7 @@ void SERVER_RDMA::ScanNewMsg() {
     CHECKPARAM* pParam = (CHECKPARAM*)malloc(sizeof(CHECKPARAM));
     pParam->idxList = (int*)malloc(sizeof(int) * nUCXNewMsg);
     pParam->size = nUCXNewMsg;
+    pParam->p_shm_IO_Cmd_Msg = p_shm_IO_Cmd_Msg;
 	for(i=0; i<nUCXNewMsg; i++)	{
 		idx_ucx = UCXNewMsgList[i];
 		pParam->idxList[i] = idx_ucx;
@@ -758,8 +760,8 @@ void SERVER_RDMA::UCX_Put(int idx, void* loc_buf, void* rem_buf, ucp_rkey_h rkey
     struct timeval tm1, tm2;
     int bTimeOut=0;	// the flag of time out in PUT. 
     if(pUCX_Data[idx].bTimeout)	{	// Something wrong with this QP. Client may disconnect or die...
-		printf("WARNING> UCX %d got timeout in previous Put(). Ignore all OPs for this UCX. HostName = %s tid = %d\n", 
-			idx, pUCX_Data[idx].szClientHostName, pUCX_Data[idx].ctid);
+		printf("WARNING> UCX %d got timeout in previous Put(). Ignore all OPs for this UCX.\n", 
+			idx);
 		return;
 	}
     ucp_ep_h peer_ep = pUCX_Data[idx].peer_ep;
