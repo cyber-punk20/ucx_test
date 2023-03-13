@@ -15,7 +15,11 @@ void CLIENT_UCX::UCX_Pack_Rkey(ucp_mem_h memh, void *rkey_buffer) {
 	memcpy(rkey_buffer, tmp_rkey_buffer, rkey_buffer_size);
 	ucp_rkey_buffer_release(tmp_rkey_buffer);
 }
-
+void err_cb(void *arg, ucp_ep_h ep, ucs_status_t status)
+{
+    printf("mpi_rank %d: error handling callback was invoked with status %d (%s)\n",
+           mpi_rank, status, ucs_status_string(status));
+}
 void CLIENT_UCX::server_create_ep() {
 	ucp_ep_params_t ep_params;
     ucs_status_t    status;
