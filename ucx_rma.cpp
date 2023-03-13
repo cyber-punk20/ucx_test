@@ -277,7 +277,7 @@ int SERVER_RDMA::Accept_Client()
 	return fd;
 }
 
-void SERVER_RDMA::Func_thread_Check_Data(void *pParam) {
+void* Func_thread_Check_Data(void *pParam) {
     CHECKPARAM* pCheckParam;
     pCheckParam = (CHECKPARAM*)pParam;
     for(int i = 0; i < pCheckParam->size; i++) {
@@ -291,6 +291,7 @@ void SERVER_RDMA::Func_thread_Check_Data(void *pParam) {
     }
     free(pCheckParam->idxList);
     free(pCheckParam);
+    return NULL;
 }
 
 void SERVER_RDMA::ScanNewMsg() {
@@ -382,11 +383,11 @@ void SERVER_RDMA::ScanNewMsg() {
 	// pthread_mutex_unlock(&process_lock);
 
     // pthread_t pthread_check_data;
-    // if(pthread_create(&pthread_check_data, NULL, Func_thread_Check_Data, (void*)pParam)) {
-    //     fprintf(stderr, "Error creating thread Func_thread_Check_Data().\n");
-    //     return;
-    // }
-    Func_thread_Check_Data((void*)pParam);
+    if(pthread_create(&pthread_check_data, NULL, Func_thread_Check_Data, (void*)pParam)) {
+        fprintf(stderr, "Error creating thread Func_thread_Check_Data().\n");
+        return;
+    }
+    // Func_thread_Check_Data((void*)pParam);
 
 }
 

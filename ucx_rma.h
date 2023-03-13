@@ -128,7 +128,7 @@ private:
                                      ucp_conn_request_h conn_request,
                                      ucp_ep_h *server_ep);
     
-    void Func_thread_Check_Data(void *pParam);
+    // void Func_thread_Check_Data(void *pParam);
     
 };
 
