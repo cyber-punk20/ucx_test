@@ -2,7 +2,7 @@ CXX=g++
 OPT=-O2 -g
 # OPT=
 CXXFLAGS=-Iinclude/ -march=skylake-avx512 -g -I/opt/intel/compilers_and_libraries_2018.6.288/linux/mpi/intel64/include -I$(UCX_INCLUDE_DIRECTORY)  -DNCX_PTR_SIZE=8 -pipe -DLOG_LEVEL=4  -DPAGE_MERGE
-OBJS=obj/server.o obj/dict.o obj/xxhash.o obj/ucx_rma.o
+OBJS=obj/server.o obj/dict.o obj/xxhash.o obj/ucx_rma.o  obj/client.o  obj/ucx_client.o
 #HEADERS=dict.h qp_common.h qp.h io_queue.h utility.h xxhash.h list.h buddy.h myfs_common.h myfs.h io_ops_common.h io_ops.h ncx_slab.h ncx_core.h ncx_log.h client/qp_client.h
 HEADERS=dict.h utility.h xxhash.h ucx_rma.h common_info.h ucx_client.h
 RM=rm -rf
