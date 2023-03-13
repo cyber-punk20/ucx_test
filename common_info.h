@@ -9,6 +9,7 @@
 #define MAX_UCP_ADDR_LEN (450)
 #define MAX_FS_UCX_SERVER (128)
 
+#define IB_DEVICE	"ib0"
 #define DEFAULT_REM_BUFF_SIZE	(4096)
 
 #define NUM_THREAD_IO_WORKER_INTER_SERVER  (8)
@@ -29,6 +30,8 @@
 
 
 #define TAG_NEW_REQUEST	(0x80)
+
+#define MAX_ENTRY_NAME_LEN    (40)
 
 #include <ucp/api/ucp.h>
 #include <ucp/api/ucp_def.h>

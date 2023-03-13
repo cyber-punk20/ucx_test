@@ -142,7 +142,8 @@ int main(int argc, char **argv) {
 
     Get_Local_Server_Info();
 	MPI_Allgather(&ThisNode, sizeof(FS_SEVER_INFO), MPI_CHAR, AllFSNodes, sizeof(FS_SEVER_INFO), MPI_CHAR, MPI_COMM_WORLD);
-    if(mpi_rank == 0)	{
+    FILE *fout;
+	if(mpi_rank == 0)	{
 		printf("INFO> There are %d servers.\n", nFSServer);
 		fOut = fopen(UCX_FS_PARAM_FILE, "w");
 		if(fOut == NULL)	{
@@ -150,7 +151,7 @@ int main(int argc, char **argv) {
 			exit(1);
 		}
 		fprintf(fOut, "%d %d\n", nFSServer, nNUMAPerNode);
-		for(i=0; i<nFSServer; i++)	{
+		for(int i=0; i<nFSServer; i++)	{
 			printf("     %d %s %d\n", i, AllFSNodes[i].szIP, AllFSNodes[i].ucx_port);
 			fprintf(fOut, "%s %d\n", AllFSNodes[i].szIP, AllFSNodes[i].ucx_port);
 		}
@@ -173,7 +174,7 @@ int main(int argc, char **argv) {
 	}
 	printf("DBG> Rank = %d,  started Func_thread_UCX_Polling_New_Msg().\n", mpi_rank);
 
-	signal(SIGALRM, sigalarm_handler); // Register signal handler
+	// signal(SIGALRM, sigalarm_handler); // Register signal handler
     if(pthread_join(thread_ucx_polling_newmsg, NULL)) {
 		fprintf(stderr, "Error joining thread.\n");
 		return 2;
