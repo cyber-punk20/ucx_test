@@ -115,9 +115,9 @@ int main(int argc, char **argv) {
 	MPI_Init(NULL, NULL);
 	MPI_Comm_size(MPI_COMM_WORLD, &nFSServer);
 	MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
-    // struct sigaction act, old_action;
+    struct sigaction act, old_action;
 	
-    // // Set up sigsegv handler
+    // Set up sigsegv handler
     // memset (&act, 0, sizeof(act));
     // act.sa_flags = SA_SIGINFO;
 	
@@ -138,49 +138,49 @@ int main(int argc, char **argv) {
 
     
 
-    // Get_Local_Server_Info();
-	// MPI_Allgather(&ThisNode, sizeof(FS_SEVER_INFO), MPI_CHAR, AllFSNodes, sizeof(FS_SEVER_INFO), MPI_CHAR, MPI_COMM_WORLD);
-    // FILE *fOut;
-	// if(mpi_rank == 0)	{
-	// 	printf("INFO> There are %d servers.\n", nFSServer);
-	// 	fOut = fopen(UCX_FS_PARAM_FILE, "w");
-	// 	if(fOut == NULL)	{
-	// 		printf("ERROR> Fail to open file: %s\nQuit.\n", UCX_FS_PARAM_FILE);
-	// 		exit(1);
-	// 	}
-	// 	fprintf(fOut, "%d %d\n", nFSServer, nNUMAPerNode);
-	// 	for(int i=0; i<nFSServer; i++)	{
-	// 		printf("     %d %s %d\n", i, AllFSNodes[i].szIP, AllFSNodes[i].ucx_port);
-	// 		fprintf(fOut, "%s %d\n", AllFSNodes[i].szIP, AllFSNodes[i].ucx_port);
-	// 	}
-	// 	fclose(fOut);
-	// }
-    // pthread_t thread_ucx_polling_newmsg, thread_ucx_server;
-    // if(pthread_create(&(thread_ucx_server), NULL, Func_thread_ucx_server, &Server_ucx)) {
-	// 	fprintf(stderr, "Error creating thread\n");
-	// 	return 1;
-	// }
-    // while(1)	{
-	// 	if(Ucx_Server_Started)	break;
-	// }
-	// MPI_Barrier(MPI_COMM_WORLD);
+    Get_Local_Server_Info();
+	MPI_Allgather(&ThisNode, sizeof(FS_SEVER_INFO), MPI_CHAR, AllFSNodes, sizeof(FS_SEVER_INFO), MPI_CHAR, MPI_COMM_WORLD);
+    FILE *fOut;
+	if(mpi_rank == 0)	{
+		printf("INFO> There are %d servers.\n", nFSServer);
+		fOut = fopen(UCX_FS_PARAM_FILE, "w");
+		if(fOut == NULL)	{
+			printf("ERROR> Fail to open file: %s\nQuit.\n", UCX_FS_PARAM_FILE);
+			exit(1);
+		}
+		fprintf(fOut, "%d %d\n", nFSServer, nNUMAPerNode);
+		for(int i=0; i<nFSServer; i++)	{
+			printf("     %d %s %d\n", i, AllFSNodes[i].szIP, AllFSNodes[i].ucx_port);
+			fprintf(fOut, "%s %d\n", AllFSNodes[i].szIP, AllFSNodes[i].ucx_port);
+		}
+		fclose(fOut);
+	}
+    pthread_t thread_ucx_polling_newmsg, thread_ucx_server;
+    if(pthread_create(&(thread_ucx_server), NULL, Func_thread_ucx_server, &Server_ucx)) {
+		fprintf(stderr, "Error creating thread\n");
+		return 1;
+	}
+    while(1)	{
+		if(Ucx_Server_Started)	break;
+	}
+	MPI_Barrier(MPI_COMM_WORLD);
 
     
-    // if(pthread_create(&(thread_ucx_polling_newmsg), NULL, Func_thread_UCX_Polling_New_Msg, &Server_ucx)) {
-	// 	fprintf(stderr, "Error creating thread thread_ucx_polling_newmsg\n");
-	// 	return 1;
-	// }
-	// printf("DBG> Rank = %d,  started Func_thread_UCX_Polling_New_Msg().\n", mpi_rank);
+    if(pthread_create(&(thread_ucx_polling_newmsg), NULL, Func_thread_UCX_Polling_New_Msg, &Server_ucx)) {
+		fprintf(stderr, "Error creating thread thread_ucx_polling_newmsg\n");
+		return 1;
+	}
+	printf("DBG> Rank = %d,  started Func_thread_UCX_Polling_New_Msg().\n", mpi_rank);
 
-	// // signal(SIGALRM, sigalarm_handler); // Register signal handler
-    // if(pthread_join(thread_ucx_polling_newmsg, NULL)) {
-	// 	fprintf(stderr, "Error joining thread.\n");
-	// 	return 2;
-	// }
-    // if(pthread_join(thread_ucx_server, NULL)) {
-	// 	fprintf(stderr, "Error joining thread thread_ucx_server.\n");
-	// 	return 2;
-	// }
+	// signal(SIGALRM, sigalarm_handler); // Register signal handler
+    if(pthread_join(thread_ucx_polling_newmsg, NULL)) {
+		fprintf(stderr, "Error joining thread.\n");
+		return 2;
+	}
+    if(pthread_join(thread_ucx_server, NULL)) {
+		fprintf(stderr, "Error joining thread thread_ucx_server.\n");
+		return 2;
+	}
 
 
     MPI_Finalize();
