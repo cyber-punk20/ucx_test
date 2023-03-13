@@ -105,6 +105,7 @@ static void* Func_thread_UCX_Polling_New_Msg(void *pParam)
 		}
 	}
 	sleep(1);
+	printf("DBG> Rank = %d,  started Func_thread_UCX_Polling_New_Msg().\n", mpi_rank);
 	while(1)	{
 		pServer_ucx->ScanNewMsg();
 	}
@@ -112,31 +113,31 @@ static void* Func_thread_UCX_Polling_New_Msg(void *pParam)
 }
 
 int main(int argc, char **argv) {
-	MPI_Init(NULL, NULL);
-	MPI_Comm_size(MPI_COMM_WORLD, &nFSServer);
-	MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
+	
     struct sigaction act, old_action;
 	
-    // Set up sigsegv handler
-    // memset (&act, 0, sizeof(act));
-    // act.sa_flags = SA_SIGINFO;
+    Set up sigsegv handler
+    memset (&act, 0, sizeof(act));
+    act.sa_flags = SA_SIGINFO;
 	
-    // act.sa_sigaction = sigsegv_handler;
-    // if (sigaction(SIGSEGV, &act, &old_action) == -1) {
-    //     perror("Error: sigaction");
-    //     exit(1);
-    // }
+    act.sa_sigaction = sigsegv_handler;
+    if (sigaction(SIGSEGV, &act, &old_action) == -1) {
+        perror("Error: sigaction");
+        exit(1);
+    }
 
-    // act.sa_sigaction = sigint_handler;
-    // if (sigaction(SIGINT, &act, &old_action) == -1) {
-    //     perror("Error: sigaction");
-    //    exit(1);
-    // }
-    // if( (old_action.sa_handler != SIG_DFL) && (old_action.sa_handler != SIG_IGN) )  {
-    //         org_int = old_action.sa_sigaction;
-    // }
+    act.sa_sigaction = sigint_handler;
+    if (sigaction(SIGINT, &act, &old_action) == -1) {
+        perror("Error: sigaction");
+       exit(1);
+    }
+    if( (old_action.sa_handler != SIG_DFL) && (old_action.sa_handler != SIG_IGN) )  {
+            org_int = old_action.sa_sigaction;
+    }
 
-    
+    MPI_Init(NULL, NULL);
+	MPI_Comm_size(MPI_COMM_WORLD, &nFSServer);
+	MPI_Comm_rank(MPI_COMM_WORLD, &mpi_rank);
 
     Get_Local_Server_Info();
 	MPI_Allgather(&ThisNode, sizeof(FS_SEVER_INFO), MPI_CHAR, AllFSNodes, sizeof(FS_SEVER_INFO), MPI_CHAR, MPI_COMM_WORLD);
@@ -170,7 +171,7 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Error creating thread thread_ucx_polling_newmsg\n");
 		return 1;
 	}
-	printf("DBG> Rank = %d,  started Func_thread_UCX_Polling_New_Msg().\n", mpi_rank);
+	
 
 	// signal(SIGALRM, sigalarm_handler); // Register signal handler
     if(pthread_join(thread_ucx_polling_newmsg, NULL)) {

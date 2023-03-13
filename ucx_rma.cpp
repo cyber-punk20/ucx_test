@@ -51,6 +51,7 @@ void SERVER_RDMA::Init_Server_UCX_Env(int remote_buff_size) {
     ucp_main_context = NULL;
     ucp_main_worker = NULL;
     Init_Context(&ucp_main_context, &ucp_main_worker);
+    printf("Rank = %d. Init_Server_UCX_Env.\n", mpi_rank);
     if(!ucp_main_context) {
         fprintf(stderr, "SERVER_RDMA Failure: No HCA can use.\n");
 		exit(1);
@@ -657,6 +658,7 @@ int SERVER_RDMA::Init_Worker(ucp_context_h ucp_context, ucp_worker_h *ucp_worker
 }
 
 void SERVER_RDMA::Init_Server_Memory(int max_num_qp, int port) {
+    printf("Rank = %d. Init_Server_Memory.\n", mpi_rank);
     int i, nSizeofNewMsgFlag, nSizeofHeartBeat, nSizeofIOCmdMsg, nSizeofIOResult, nSizeofIOResult_Recv, nSizePerCallReturnBlock, nSizeofReturnBuffer;
 	int offset;
 	
