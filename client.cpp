@@ -73,7 +73,7 @@ static void* Func_thread_send(void *pParam) {
     b[0] = TAG_NEW_REQUEST;
     for(int i = 0; i < IO_CNT; i++) {
         // sprintf(buffer, "%d", i);
-        int* intptr = (int*) buffer;
+        int* intptr = (int*)buffer;
         *intptr = i;
         generate_test_string(buffer, BLOCK_SIZE);
         pClientUCX->UCX_Put(buffer, (void*)(pClientUCX->remote_addr_IO_CMD), pClientUCX->pal_remote_mem.rkey, BLOCK_SIZE);
