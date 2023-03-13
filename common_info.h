@@ -5,7 +5,7 @@
 #define PORT 8888
 #define UCX_PORT 12589
 
-#define BLOCK_SIZE (1024 * 1024 * 3)
+#define BLOCK_SIZE (1024)
 #define UCX_FS_PARAM_FILE "ucx_myfs.param"
 #define MAX_UCP_RKEY_SIZE (150)
 #define MAX_UCP_ADDR_LEN (450)
@@ -65,7 +65,7 @@ inline int generate_test_string(char *str, int size)
     int start = *((int*)str);
     printf("generate_test_string %d %d", start , size);
     for (i = 4; i < (size - 4); ++i) {
-        // printf("haha%d\n", i);
+        printf("haha%d\n", i);
         *(str + i) = (char)('A' + ((start + i) % 26));
     }
     // str[i] = '\0';
