@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
 	
     struct sigaction act, old_action;
 	
-    Set up sigsegv handler
+    // Set up sigsegv handler
     memset (&act, 0, sizeof(act));
     act.sa_flags = SA_SIGINFO;
 	
