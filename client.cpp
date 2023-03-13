@@ -74,8 +74,8 @@ static void* Func_thread_send(void *pParam) {
     for(int i = 0; i < IO_CNT; i++) {
         sprintf(buffer, "%d", i);
         generate_test_string(buffer, BLOCK_SIZE);
-        pClientUCX->UCX_Put(buffer, pClientUCX->remote_addr_IO_CMD, pClientUCX->pal_remote_mem.rkey, BLOCK_SIZE);
-        pClientUCX->UCX_Put(b, pClientUCX->remote_addr_new_msg, pClientUCX->pal_remote_mem.rkey, 1);
+        pClientUCX->UCX_Put(buffer, (void*)(pClientUCX->remote_addr_IO_CMD), pClientUCX->pal_remote_mem.rkey, BLOCK_SIZE);
+        pClientUCX->UCX_Put(b, (void*)(pClientUCX->remote_addr_new_msg), pClientUCX->pal_remote_mem.rkey, 1);
     }
 }
 
