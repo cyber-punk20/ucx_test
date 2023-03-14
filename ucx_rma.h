@@ -116,6 +116,7 @@ pthread_mutex_t process_lock;	// for this process
 
     int FindFirstAvailableQP(void);
     void ScanNewMsg();
+    void WorkerProgress();
 private:
 
     int nAllUCXNewMsg;

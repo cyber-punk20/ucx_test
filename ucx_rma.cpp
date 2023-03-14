@@ -769,6 +769,13 @@ void SERVER_RDMA::UCX_Unpack_Rkey(int idx, void* rkey_buffer, ucp_rkey_h* rkey_p
 	}
 }
 
+void SERVER_RDMA::WorkerProgress() {
+   for(int i=0; i<NUM_THREAD_IO_WORKER; i++)	{
+		assert(ucp_data_worker[i] != NULL);
+        ucp_worker_progress(ucp_data_worker[i]);
+	}
+}
+
 void SERVER_RDMA::UCX_Put(int idx, void* loc_buf, void* rem_buf, ucp_rkey_h rkey, size_t len) {
     long int t1_ms, t2_ms;
     struct timeval tm1, tm2;

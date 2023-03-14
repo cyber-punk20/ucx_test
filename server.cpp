@@ -93,6 +93,15 @@ static void* Func_thread_ucx_server(void *pParam) {
 	return 0;
 }
 
+static void* Func_thread_ucx_server_progress(void *pParam) {
+	SERVER_RDMA *pServer_ucx;
+	pServer_ucx = (SERVER_RDMA *)pParam;
+	while(true) {
+		pServer_ucx->WorkerProgress();
+	}
+	return 0;
+}
+
 static void* Func_thread_UCX_Polling_New_Msg(void *pParam)
 {
 	SERVER_RDMA *pServer_ucx;
@@ -159,16 +168,23 @@ int main(int argc, char **argv) {
 	}
 
 	
-    pthread_t thread_ucx_polling_newmsg, thread_ucx_server;
+    pthread_t thread_ucx_polling_newmsg, thread_ucx_server, thread_ucx_server_progress;
     if(pthread_create(&(thread_ucx_server), NULL, Func_thread_ucx_server, &Server_ucx)) {
 		fprintf(stderr, "Error creating thread\n");
 		return 1;
 	}
+	
     while(1)	{
 		if(Ucx_Server_Started)	break;
 	}
 	MPI_Barrier(MPI_COMM_WORLD);
 
+	if(pthread_create(&(thread_ucx_server_progress), NULL, Func_thread_ucx_server_progress, &Server_ucx)) {
+		fprintf(stderr, "Error creating thread\n");
+		return 1;
+	}
+
+	
     
     // if(pthread_create(&(thread_ucx_polling_newmsg), NULL, Func_thread_UCX_Polling_New_Msg, &Server_ucx)) {
 	// 	fprintf(stderr, "Error creating thread thread_ucx_polling_newmsg\n");
