@@ -84,7 +84,7 @@ static void* Func_thread_send(void *pParam) {
         memset(pClientUCX->ucx_rem_buff, 0, sizeof(int));
         pClientUCX->UCX_Put(buffer, (void*)(pClientUCX->remote_addr_IO_CMD), pClientUCX->pal_remote_mem.rkey, BLOCK_SIZE);
         pClientUCX->UCX_Put(b, (void*)(pClientUCX->remote_addr_new_msg), pClientUCX->pal_remote_mem.rkey, 1);
-        Wait_For_Ack(pClientUCX->ucx_rem_buff);
+        Wait_For_Ack(pClientUCX, pClientUCX->ucx_rem_buff);
     }
     return NULL;
 }
