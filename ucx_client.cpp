@@ -264,7 +264,7 @@ int CLIENT_UCX::UCX_Put(void* loc_buf, void* rem_buf, ucp_rkey_h rkey, size_t le
     }
 	nPut++;
 	if(req == NULL) {
-		fprintf(stdout, "DBG> UCX_Put returns immediately loc %p rem %p\n", loc_buf, rem_buf);
+		// fprintf(stdout, "DBG> UCX_Put returns immediately loc %p rem %p\n", loc_buf, rem_buf);
 		nPut_Done +=1;
 	}
 	if( (nPut - nPut_Done) >= UCX_QUEUE_SIZE ) {
@@ -274,7 +274,7 @@ int CLIENT_UCX::UCX_Put(void* loc_buf, void* rem_buf, ucp_rkey_h rkey, size_t le
             ucs_status_t status = ucp_request_check_status(req);
             if(status == UCS_OK) {
                 nPut_Done +=1;
-				fprintf(stdout, "DBG> UCX_Put UCS_OK loc %p rem %p\n", loc_buf, rem_buf);
+				// fprintf(stdout, "DBG> UCX_Put UCS_OK loc %p rem %p\n", loc_buf, rem_buf);
                 break;
             }
             else if(status == UCS_INPROGRESS) {
