@@ -286,9 +286,9 @@ void Func_thread_Check_Data(void *pParam) {
         int idx_ucx = pCheckParam->idxList[i];
         bool res = check_test_string((char*)pCheckParam->p_shm_IO_Cmd_Msg + BLOCK_SIZE * idx_ucx, BLOCK_SIZE);
         if(res) {
-            fprintf(stdout, "idx_ucx: %d pass test", idx_ucx);
+            fprintf(stdout, "idx_ucx: %d pass test\n", idx_ucx);
         } else {
-            fprintf(stdout, "idx_ucx: %d fail test", idx_ucx);
+            fprintf(stdout, "idx_ucx: %d fail test\n", idx_ucx);
         }
         int ack = 1;
         pServer->UCX_Put(idx_ucx, &ack, (void*)pServer->pUCX_Data[idx_ucx].rem_addr, pServer->pUCX_Data[idx_ucx].rkey, sizeof(int));
