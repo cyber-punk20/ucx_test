@@ -5,7 +5,7 @@
 #define PORT 8888
 #define UCX_PORT 12589
 
-#define BLOCK_SIZE (512)
+#define BLOCK_SIZE (1024 * 1024)
 #define UCX_FS_PARAM_FILE "ucx_myfs.param"
 #define MAX_UCP_RKEY_SIZE (150)
 #define MAX_UCP_ADDR_LEN (450)
