@@ -76,7 +76,7 @@ inline int generate_test_string(char *str, int size)
 {
     int i;
     int start = *((int*)str);
-    printf("mpi_rank: %d, generate_test_string %d\n", start , size, mpi_rank);
+    printf("mpi_rank: %d, generate_test_string %d\n", mpi_rank, start);
     for (i = 4; i < (size - 1); ++i) {
         // printf("haha%d\n", i);
         *(str + i) = (char)('A' + ((start + i) % 26));
