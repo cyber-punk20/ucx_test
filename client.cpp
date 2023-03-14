@@ -66,6 +66,7 @@ void Init_UCX_Client()  {
 #define IO_CNT 500
 #define MULTI_THREAD_NUM 1
 void Wait_For_Ack(void* addr) {
+    printf("Wait_For_Ack: %p\n", addr);
     while(*((int*)addr) != 1) {}
 }
 static void* Func_thread_send(void *pParam) {
