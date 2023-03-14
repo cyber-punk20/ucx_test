@@ -71,6 +71,20 @@ void Wait_For_Ack(CLIENT_UCX* pClientUCX, void* addr) {
         ucp_worker_progress(pClientUCX->ucp_worker);
     }
 }
+
+inline int generate_test_string(char *str, int size)
+{
+    int i;
+    int start = *((int*)str);
+    printf("mpi_rank: %d, generate_test_string %d\n", start , size, mpi_rank);
+    for (i = 4; i < (size - 1); ++i) {
+        // printf("haha%d\n", i);
+        *(str + i) = (char)('A' + ((start + i) % 26));
+    }
+    // str[i] = '\0';
+    return 0;
+}
+
 static void* Func_thread_send(void *pParam) {
     CLIENT_UCX* pClientUCX = (CLIENT_UCX*)pParam;
     char buffer[BLOCK_SIZE];
