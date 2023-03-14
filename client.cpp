@@ -65,7 +65,9 @@ void Init_UCX_Client()  {
 
 #define IO_CNT 500
 #define MULTI_THREAD_NUM 1
-
+void Wait_For_Ack(void* addr) {
+    while(*((int*)addr) != 1) {}
+}
 static void* Func_thread_send(void *pParam) {
     CLIENT_UCX* pClientUCX = (CLIENT_UCX*)pParam;
     char buffer[BLOCK_SIZE];
@@ -76,8 +78,10 @@ static void* Func_thread_send(void *pParam) {
         int* intptr = (int*)buffer;
         *intptr = i;
         generate_test_string(buffer, BLOCK_SIZE);
+        memset(pClientUCX->ucx_rem_buff, 0, sizeof(int));
         pClientUCX->UCX_Put(buffer, (void*)(pClientUCX->remote_addr_IO_CMD), pClientUCX->pal_remote_mem.rkey, BLOCK_SIZE);
         pClientUCX->UCX_Put(b, (void*)(pClientUCX->remote_addr_new_msg), pClientUCX->pal_remote_mem.rkey, 1);
+        Wait_For_Ack(pClientUCX->ucx_rem_buff);
     }
     return NULL;
 }

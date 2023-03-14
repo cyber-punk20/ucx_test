@@ -27,6 +27,7 @@ typedef struct {
     int* idxList;
     int size;
     unsigned char *p_shm_IO_Cmd_Msg;
+    SERVER_RDMA* pServer;
 }CHECKPARAM, * PCHECKPARAM;
 
 SERVER_RDMA::SERVER_RDMA(void)
@@ -280,6 +281,7 @@ int SERVER_RDMA::Accept_Client()
 void Func_thread_Check_Data(void *pParam) {
     CHECKPARAM* pCheckParam;
     pCheckParam = (CHECKPARAM*)pParam;
+    SERVER_RDMA* pServer = pCheckParam->pServer;
     for(int i = 0; i < pCheckParam->size; i++) {
         int idx_ucx = pCheckParam->idxList[i];
         bool res = check_test_string((char*)pCheckParam->p_shm_IO_Cmd_Msg + BLOCK_SIZE * idx_ucx, BLOCK_SIZE);
@@ -288,6 +290,8 @@ void Func_thread_Check_Data(void *pParam) {
         } else {
             fprintf(stdout, "idx_ucx: %d fail test", idx_ucx);
         }
+        int res = 1;
+        pServer->UCX_Put(idx_ucx, &res, pServer->pUCX_Data[idx_ucx].rem_addr, pServer->pUCX_Data[idx_ucx].rkey, sizeof(int));
     }
     free(pCheckParam->idxList);
     free(pCheckParam);
@@ -367,6 +371,7 @@ void SERVER_RDMA::ScanNewMsg() {
 	gettimeofday(&tm, NULL);
 	T_Queued = tm.tv_sec * 1000000 + tm.tv_usec;
     CHECKPARAM* pParam = (CHECKPARAM*)malloc(sizeof(CHECKPARAM));
+    pParam->pServer = this;
     pParam->idxList = (int*)malloc(sizeof(int) * nUCXNewMsg);
     pParam->size = nUCXNewMsg;
     pParam->p_shm_IO_Cmd_Msg = p_shm_IO_Cmd_Msg;
