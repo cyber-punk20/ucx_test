@@ -290,8 +290,8 @@ void Func_thread_Check_Data(void *pParam) {
         } else {
             fprintf(stdout, "idx_ucx: %d fail test", idx_ucx);
         }
-        int res = 1;
-        pServer->UCX_Put(idx_ucx, &res, pServer->pUCX_Data[idx_ucx].rem_addr, pServer->pUCX_Data[idx_ucx].rkey, sizeof(int));
+        int ack = 1;
+        pServer->UCX_Put(idx_ucx, &ack, (void*)pServer->pUCX_Data[idx_ucx].rem_addr, pServer->pUCX_Data[idx_ucx].rkey, sizeof(int));
     }
     free(pCheckParam->idxList);
     free(pCheckParam);
