@@ -127,5 +127,6 @@ int main() {
             return 2;
         }
     }
+    MPI_Finalize();
 
 }
