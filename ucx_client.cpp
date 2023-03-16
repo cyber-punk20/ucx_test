@@ -201,10 +201,10 @@ void CLIENT_UCX::Setup_UCP_Connection(int IdxServer) {
 		// if(ret != UCS_OK) {
 			
 		// }
-		printf("RegisterBuf_RW_Local_Remote err:%s\n", ucs_status_string(ret));
+		// printf("RegisterBuf_RW_Local_Remote err:%s\n", ucs_status_string(ret));
 	}
-	assert(ucp_main_context != NULL);
-	assert(ucx_mr_rem != NULL);
+	// assert(ucp_main_context != NULL);
+	// assert(ucx_mr_rem != NULL);
 	my_remote_mem.addr = (uint64_t)ucx_rem_buff;
 	void* rkey_buffer = NULL;
     size_t rkey_buffer_size = 0;
