@@ -197,7 +197,10 @@ void CLIENT_UCX::Setup_UCP_Connection(int IdxServer) {
     if(ucx_rem_buff == NULL)	{
 		ucx_rem_buff = (unsigned char *)memalign(64, 2*BLOCK_SIZE);
 		assert(ucx_rem_buff != NULL);
-		RegisterBuf_RW_Local_Remote(ucx_rem_buff, BLOCK_SIZE, &ucx_mr_rem);
+		ucs_status_t ret = RegisterBuf_RW_Local_Remote(ucx_rem_buff, BLOCK_SIZE, &ucx_mr_rem);
+		if(ret != UCS_OK) {
+			printf("RegisterBuf_RW_Local_Remote err:%s\n", ucs_status_string(ret));
+		}
 	}
 	assert(ucp_main_context != NULL);
 	assert(ucx_mr_rem != NULL);
