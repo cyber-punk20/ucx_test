@@ -198,9 +198,10 @@ void CLIENT_UCX::Setup_UCP_Connection(int IdxServer) {
 		ucx_rem_buff = (unsigned char *)memalign(64, 2*BLOCK_SIZE);
 		assert(ucx_rem_buff != NULL);
 		ucs_status_t ret = RegisterBuf_RW_Local_Remote(ucx_rem_buff, BLOCK_SIZE, &ucx_mr_rem);
-		if(ret != UCS_OK) {
-			printf("RegisterBuf_RW_Local_Remote err:%s\n", ucs_status_string(ret));
-		}
+		// if(ret != UCS_OK) {
+			
+		// }
+		printf("RegisterBuf_RW_Local_Remote err:%s\n", ucs_status_string(ret));
 	}
 	assert(ucp_main_context != NULL);
 	assert(ucx_mr_rem != NULL);
@@ -247,6 +248,7 @@ void CLIENT_UCX::Setup_UCP_Connection(int IdxServer) {
 ucs_status_t CLIENT_UCX::RegisterBuf_RW_Local_Remote(void* buf, size_t len, ucp_mem_h* memh) {
     uct_allocated_memory_t alloc_mem;
     ucp_mem_map_params_t mem_map_params;
+	memset(&mem_map_params, 0, sizeof(ucp_mem_map_params_t));
     mem_map_params.field_mask = UCP_MEM_MAP_PARAM_FIELD_ADDRESS | UCP_MEM_MAP_PARAM_FIELD_LENGTH;
     mem_map_params.length = len;
     mem_map_params.address = buf;
