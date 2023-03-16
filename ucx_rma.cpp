@@ -189,7 +189,7 @@ int SERVER_RDMA::FindFirstAvailableQP(void)
 	idx = FirstAV_QP;
 	FirstAV_QP = -1;
 
-	for(i = MAX(idx+1,nFSServer*NUM_THREAD_IO_WORKER_INTER_SERVER); i<max_qp; i++)	{
+	for(i = /*MAX(idx+1,nFSServer*NUM_THREAD_IO_WORKER_INTER_SERVER)*/idx + 1; i<max_qp; i++)	{
 		if(pUCX_Data[i].ucp_data_worker == NULL)	{
 			FirstAV_QP = i;
 			break;
