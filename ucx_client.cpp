@@ -200,9 +200,9 @@ void CLIENT_UCX::Setup_UCP_Connection(int IdxServer) {
 		RegisterBuf_RW_Local_Remote(ucx_rem_buff, BLOCK_SIZE, &ucx_mr_rem);
 		assert(ucx_rem_buff != ucx_mr_rem);
 	}
-
+	assert(ucp_main_context != NULL);
 	my_remote_mem.addr = (uint64_t)ucx_rem_buff;
-	void* rkey_buffer;
+	void* rkey_buffer = NULL;
     size_t rkey_buffer_size = 0;
 	ucs_status_t status = ucp_rkey_pack(ucp_main_context, ucx_mr_rem, &rkey_buffer, &rkey_buffer_size);
     assert(rkey_buffer != NULL);
