@@ -263,7 +263,7 @@ int SERVER_RDMA::Accept_Client()
 		AllocateUCPDataWorker(idx);
 
 		if( FirstAV_QP > (nQP+NUM_THREAD_IO_WORKER_INTER_SERVER) )	{
-			printf("DBG> UCX Something wrong! %d %d\n", FirstAV_QP, nQP+NUM_THREAD_IO_WORKER_INTER_SERVER);
+			printf("RANK %d DBG> UCX Something wrong! %d %d\n", mpi_rank, FirstAV_QP, nQP+NUM_THREAD_IO_WORKER_INTER_SERVER);
 		}
 
 		pthread_mutex_unlock(&process_lock);
