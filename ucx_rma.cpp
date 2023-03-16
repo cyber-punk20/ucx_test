@@ -382,7 +382,7 @@ void SERVER_RDMA::ScanNewMsg() {
 	// pthread_mutex_lock(&process_lock);
 	nAllUCXNewMsg += nUCXNewMsg;
 	if(nPreAllUCXNewMsg != nAllUCXNewMsg) {
-        fprintf(stdout, "nAllUCXNewMsg %d newMsgThisRound %d\n", nAllUCXNewMsg, nUCXNewMsg);
+        fprintf(stdout, "RANK=%d nAllUCXNewMsg %d newMsgThisRound %d\n", mpi_rank, nAllUCXNewMsg, nUCXNewMsg);
     }
     // printf("ScanNewMsg\n");
 	// pthread_mutex_unlock(&process_lock);
