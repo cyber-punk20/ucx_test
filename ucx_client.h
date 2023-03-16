@@ -73,7 +73,7 @@ public:
 	
 	ucp_worker_h  ucp_worker = NULL;
 
-	void* ucx_rem_buff;
+	void* ucx_rem_buff = NULL;
     ucp_mem_h ucx_mr_rem = NULL;
 
 	uint64_t remote_addr_new_msg;	// the address of remote buffer to notify a new message
